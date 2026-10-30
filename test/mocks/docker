@@ -1,0 +1,4 @@
+#!/bin/sh
+set -eu
+echo "$*" >> "${MOCK_LOG:?MOCK_LOG is required}"
+exit 0

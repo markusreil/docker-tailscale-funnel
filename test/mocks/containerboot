@@ -1,0 +1,12 @@
+#!/bin/sh
+set -eu
+tries=0
+while ! grep -q 'funnel --bg' "${MOCK_LOG:?MOCK_LOG is required}" 2>/dev/null; do
+  tries=$((tries + 1))
+  if [ "$tries" -gt 200 ]; then
+    echo "containerboot mock: funnel never served" >&2
+    exit 1
+  fi
+  sleep 0.1
+done
+exit 0

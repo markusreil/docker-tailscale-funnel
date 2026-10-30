@@ -1,0 +1,5 @@
+test/out/
+__pycache__/
+.output.xml
+.log.html
+.report.html

@@ -1,0 +1,43 @@
+#!/bin/sh
+set -eu
+echo "$*" >> "${MOCK_LOG:?MOCK_LOG is required}"
+if [ "$1" = "status" ]; then
+  if [ "${MOCK_MODE:-ok}" = "no-backend" ]; then
+    echo '{"BackendState": "NoState"}'
+    exit 0
+  fi
+  delay=${MOCK_BACKEND_DELAY:-0}
+  count=$(cat "${MOCK_STATE:?MOCK_STATE is required}/status_calls" 2>/dev/null || echo 0)
+  count=$((count + 1))
+  echo "$count" > "${MOCK_STATE}/status_calls"
+  if [ "$count" -le "$delay" ]; then
+    echo '{"BackendState": "NoState"}'
+  else
+    echo '{"BackendState": "Running"}'
+  fi
+  exit 0
+fi
+if [ "$1" = "funnel" ] && [ "${2:-}" = "reset" ]; then
+  case "${MOCK_FAIL_RESET:-0}" in
+    always) exit 1 ;;
+    0) exit 0 ;;
+    *)
+      count=$(cat "${MOCK_STATE:?MOCK_STATE is required}/reset_attempts" 2>/dev/null || echo 0)
+      count=$((count + 1))
+      echo "$count" > "${MOCK_STATE}/reset_attempts"
+      [ "$count" -le "${MOCK_FAIL_RESET}" ] && exit 1 || exit 0 ;;
+  esac
+fi
+case "${MOCK_MODE:-ok}" in
+  fail-funnel-always)
+    [ "$1" = "funnel" ] && exit 1 || exit 0 ;;
+  fail-serve-once)
+    if [ "$1" = "funnel" ] && [ "${2:-}" = "--bg" ]; then
+      if [ -f "${MOCK_STATE:?MOCK_STATE is required}/served" ]; then exit 0; fi
+      touch "${MOCK_STATE}/served"
+      exit 1
+    fi
+    exit 0 ;;
+  *)
+    exit 0 ;;
+esac

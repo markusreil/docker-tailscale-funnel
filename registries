@@ -1,0 +1,6 @@
+# Project registry set, one per line. docker/publish.sh pushes the same tags
+# to all of them. Lines starting with # and blank lines are ignored.
+# CLI args override this file for one-off pushes.
+#
+# registry.max.home.arpa needs no login.
+registry.max.home.arpa/tailscale-funnel
