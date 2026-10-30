@@ -19,6 +19,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Security
 
+## [0.1.1] - 2026-10-30
+
+### Fixed
+
+- Resolve entrypoint symlink before locating `funnel.sh` so `/entrypoint.sh` starts instead of dying on line 4.
+
 ## [0.1.0] - 2026-10-30
 
 ### Added

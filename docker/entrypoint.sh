@@ -1,6 +1,6 @@
 #!/bin/sh
 set -eu
-SCRIPT_DIR=$(dirname "$0")
+SCRIPT_DIR=$(dirname "$(readlink -f "$0")")
 . "$SCRIPT_DIR/funnel.sh"
 : "${CONTAINERBOOT_BIN:=/usr/local/bin/containerboot}"
 
