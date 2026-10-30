@@ -40,11 +40,16 @@ for registry in $REGISTRIES; do
     set -- "$@" -t "$registry:$tag"
   done
 done
-docker buildx build --push \
+docker build \
   --build-arg "BUILD_DATE=$BUILD_DATE" \
   --build-arg "VERSION=$VERSION" \
   --build-arg "GIT_SHA=$GIT_SHA" \
   "$@" \
   "$REPO_DIR"
+for registry in $REGISTRIES; do
+  for tag in $TAGS; do
+    docker push "$registry:$tag"
+  done
+done
 
 echo "published $VERSION ($GIT_SHA) to:$REGISTRIES"
