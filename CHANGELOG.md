@@ -9,11 +9,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-- Reset retry on every start (`FUNNEL_RESET_RETRIES`/`FUNNEL_RESET_DELAY`), WARNING-loud on total failure.
-- Version baked into the image (`VERSION`/`GIT_SHA` env plus OCI labels), resolved from git tags.
-- `publish.sh` with per-project registry set in `registries`.
-- Robot Framework suites with mock `tailscale`/`docker`, covering toggles, target/path changes, reset retry, retry-until-approval, backend wait, full entrypoint boot, and publish version resolution.
-
 ### Changed
 
 ### Deprecated
@@ -21,6 +16,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Removed
 
 ### Fixed
+
+### Security
+
+## [0.1.0] - 2026-10-30
+
+### Added
+
+- Reset retry on every start (`FUNNEL_RESET_RETRIES`/`FUNNEL_RESET_DELAY`), WARNING-loud on total failure.
+- Version baked into the image (`VERSION`/`GIT_SHA` env plus OCI labels), resolved from git tags.
+- `publish.sh` with per-project registry set in `registries`.
+- Robot Framework suites with mock `tailscale`/`docker`, covering toggles, target/path changes, reset retry, retry-until-approval, backend wait, full entrypoint boot, and publish version resolution.
 
 ### Security
 
